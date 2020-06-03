@@ -342,6 +342,7 @@ typedef struct CoreData {
     struct {
 #if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
         GLFWwindow *handle;                 // Native window handle (graphic device)
+        GLFWcursor *cursor;                 // GLFW cursor object
 #endif
 #if defined(PLATFORM_RPI)
         // NOTE: RPI4 does not support Dispmanx anymore, system should be redesigned
@@ -780,6 +781,7 @@ void CloseWindow(void)
     rlglClose();                // De-init rlgl
 
 #if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
+    glfwDestroyCursor(CORE.Window.cursor);
     glfwDestroyWindow(CORE.Window.handle);
     glfwTerminate();
 #endif
@@ -2738,6 +2740,41 @@ int GetMouseWheelMove(void)
     return CORE.Input.Mouse.previousWheelMove/100;
 #else
     return CORE.Input.Mouse.previousWheelMove;
+#endif
+}
+
+void SetCursorShape(int shape) {
+#if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
+    if (CORE.Window.cursor) glfwDestroyCursor(CORE.Window.cursor);
+        
+    switch (shape) {
+    case CURSOR_DEFAULT:
+        CORE.Window.cursor = NULL;
+        break;
+    case CURSOR_ARROW:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        break;
+    case CURSOR_IBEAM:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        break;
+    case CURSOR_CROSSHAIR:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
+        break;
+    case CURSOR_HAND:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+        break;
+    case CURSOR_HRESIZE:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+        break;
+    case CURSOR_VRESIZE:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+        break;
+    default:
+        CORE.Window.cursor = NULL;
+        break;
+    }
+
+    glfwSetCursor(CORE.Window.handle, CORE.Window.cursor);
 #endif
 }
 
