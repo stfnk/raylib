@@ -620,13 +620,17 @@ typedef enum {
 
 // Cursor shapes
 typedef enum {
-    CURSOR_DEFAULT      = 0,
-    CURSOR_ARROW        = 1,
-    CURSOR_IBEAM        = 2,
-    CURSOR_CROSSHAIR    = 3,
-    CURSOR_HAND         = 4,
-    CURSOR_HRESIZE      = 5,
-    CURSOR_VRESIZE      = 6
+    CURSOR_DEFAULT          = 0,
+    CURSOR_ARROW            = 1,
+    CURSOR_IBEAM            = 2,
+    CURSOR_CROSSHAIR        = 3,
+    CURSOR_POINTING_HAND    = 4,
+    CURSOR_RESIZE_EW        = 5,
+    CURSOR_RESIZE_NS        = 6,
+    CURSOR_RESIZE_NWSE      = 7,
+    CURSOR_RESIZE_NESW      = 8,
+    CURSOR_RESIZE_ALL       = 9,
+    CURSOR_NOT_ALLOWED      = 10
 } CursorShapes;
 
 // Gamepad number
@@ -915,6 +919,7 @@ RLAPI bool IsCursorHidden(void);                                  // Check if cu
 RLAPI void EnableCursor(void);                                    // Enables cursor (unlock cursor)
 RLAPI void DisableCursor(void);                                   // Disables cursor (lock cursor)
 RLAPI bool IsCursorOnScreen(void);                                // Check if cursor is on the current screen.
+RLAPI void SetCursorShape(int shape);                             // Set the cursor shape
 
 // Drawing-related functions
 RLAPI void ClearBackground(Color color);                          // Set background color (framebuffer clear color)
@@ -1029,7 +1034,6 @@ RLAPI void SetMousePosition(int x, int y);                    // Set mouse posit
 RLAPI void SetMouseOffset(int offsetX, int offsetY);          // Set mouse offset
 RLAPI void SetMouseScale(float scaleX, float scaleY);         // Set mouse scaling
 RLAPI int GetMouseWheelMove(void);                            // Returns mouse wheel movement Y
-RLAPI void SetCursorShape(int shape);                         // Set the cursor shape
 
 // Input-related functions: touch
 RLAPI int GetTouchX(void);                                    // Returns touch position X for touch point 0 (relative to screen size)

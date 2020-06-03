@@ -1326,6 +1326,52 @@ bool IsCursorOnScreen(void)
     return CORE.Input.Mouse.cursorOnScreen;
 }
 
+// Set cursor to any standard shape.
+void SetCursorShape(int shape) {
+#if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
+    if (CORE.Window.cursor) glfwDestroyCursor(CORE.Window.cursor);
+
+    switch (shape) {
+    case CURSOR_ARROW:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        break;
+    case CURSOR_IBEAM:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        break;
+    case CURSOR_CROSSHAIR:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
+        break;
+    case CURSOR_POINTING_HAND:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_POINTING_HAND_CURSOR);
+        break;
+    case CURSOR_RESIZE_EW:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_RESIZE_EW_CURSOR);
+        break;
+    case CURSOR_RESIZE_NS:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_RESIZE_NS_CURSOR);
+        break;
+    case CURSOR_RESIZE_NWSE:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_RESIZE_NWSE_CURSOR);
+        break;
+    case CURSOR_RESIZE_NESW:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_RESIZE_NESW_CURSOR);
+        break;
+    case CURSOR_RESIZE_ALL:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_RESIZE_ALL_CURSOR);
+        break;
+    case CURSOR_NOT_ALLOWED:
+        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_NOT_ALLOWED_CURSOR);
+        break;
+    case CURSOR_DEFAULT:
+    default:
+        CORE.Window.cursor = NULL;
+        break;
+    }
+
+    glfwSetCursor(CORE.Window.handle, CORE.Window.cursor);
+#endif
+}
+
 // Set background color (framebuffer clear color)
 void ClearBackground(Color color)
 {
@@ -2740,41 +2786,6 @@ int GetMouseWheelMove(void)
     return CORE.Input.Mouse.previousWheelMove/100;
 #else
     return CORE.Input.Mouse.previousWheelMove;
-#endif
-}
-
-void SetCursorShape(int shape) {
-#if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
-    if (CORE.Window.cursor) glfwDestroyCursor(CORE.Window.cursor);
-        
-    switch (shape) {
-    case CURSOR_DEFAULT:
-        CORE.Window.cursor = NULL;
-        break;
-    case CURSOR_ARROW:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-        break;
-    case CURSOR_IBEAM:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
-        break;
-    case CURSOR_CROSSHAIR:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
-        break;
-    case CURSOR_HAND:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
-        break;
-    case CURSOR_HRESIZE:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
-        break;
-    case CURSOR_VRESIZE:
-        CORE.Window.cursor = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
-        break;
-    default:
-        CORE.Window.cursor = NULL;
-        break;
-    }
-
-    glfwSetCursor(CORE.Window.handle, CORE.Window.cursor);
 #endif
 }
 
